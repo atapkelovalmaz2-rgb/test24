@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Международный центр развития языков</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .screen {
+      display: none;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+    .active {
+      display: block;
+    }
+    .card, .container {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+    h3 {
+      margin: 15px 0;
+    }
+    p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-blue { background: #1976d2; }
+    .btn-green { background: #2e7d32; }
+    .btn-yellow { background: #f9a825; }
+    .btn-red { background: #d32f2f; }
+    .btn:hover { opacity: 0.9; }
+
+    .input-box {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #1976d2;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    .back-btn {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: none;
+      border: none;
+      color: #1976d2;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Экран 1: выбор языка -->
+  <div id="screen1" class="screen active">
+    <div class="card">
+      <img src="logo.png" alt="Логотип">
+      <h2>Международный центр развития языков</h2>
+      <p>Выберите язык, который вам удобен.</p>
+      <button class="btn btn-blue" onclick="goToCode()">Қазақ тілі</button>
+      <button class="btn btn-green" onclick="goToCode()">Русский язык</button>
+    </div>
+  </div>
+
+  <!-- Экран 2: ввод кода -->
+  <div id="screen2" class="screen">
+    <button class="back-btn" onclick="goBack(1)">← Назад</button>
+    <div class="container">
+      <img src="logo.png" alt="Логотип">
+      <h2>Введите код доступа</h2>
+      <input type="text" id="codeInput" class="input-box" placeholder="Введите код">
+      <button class="btn btn-blue" onclick="checkCode()">Подтвердить</button>
+      <p id="errorMsg" class="error">❌ Неверный код, попробуйте снова</p>
+    </div>
+  </div>
+
+  <!-- Экран 3: выбор класса -->
+  <div id="screen3" class="screen">
+    <button class="back-btn" onclick="goBack(2)">← Назад</button>
+    <div class="card">
+      <img src="logo.png" alt="Логотип">
+      <h2>Международный центр развития языков</h2>
+      <h3>Выберите класс.</h3>
+      <button class="btn btn-blue" onclick="goToSubjects()">2 класс</button>
+      <button class="btn btn-green" onclick="goToSubjects()">3 класс</button>
+      <button class="btn btn-red" onclick="goToSubjects()">4 класс</button>
+    </div>
+  </div>
+
+  <!-- Экран 4: выбор предмета -->
+  <div id="screen4" class="screen">
+    <button class="back-btn" onclick="goBack(3)">← Назад</button>
+    <div class="card">
+      <img src="logo.png" alt="Логотип">
+      <h2>Международный центр развития языков</h2>
+      <h3>Выберите предмет.</h3>
+      <button class="btn btn-blue" onclick="goToForm('Математика')">Математика</button>
+      <button class="btn btn-green" onclick="goToForm('Русский язык')">Русский язык</button>
+      <button class="btn btn-yellow" onclick="goToForm('Казахский язык')">Казахский язык</button>
+      <button class="btn btn-red" onclick="goToForm('Английский язык')">Английский язык</button>
+    </div>
+  </div>
+
+  <!-- Экран 5: ввод данных -->
+  <div id="screen5" class="screen">
+    <button class="back-btn" onclick="goBack(4)">← Назад</button>
+    <div class="card">
+      <h2 id="subjectTitle">Введите данные</h2>
+      <h3>ФИО участника</h3>
+      <input type="text" class="input-box" placeholder="Введите ФИО участника">
+      <h3>ФИО руководителя</h3>
+      <input type="text" class="input-box" placeholder="Введите ФИО руководителя">
+      <button class="btn btn-blue">Продолжить</button>
+    </div>
+  </div>
+
+  <script>
+    function goToCode() {
+      showScreen(2);
+    }
+
+    function checkCode() {
+      const code = document.getElementById("codeInput").value;
+      if (code === "SDG123") {
+        showScreen(3);
+      } else {
+        document.getElementById("errorMsg").style.display = "block";
+      }
+    }
+
+    function goToSubjects() {
+      showScreen(4);
+    }
+
+    function goToForm(subject) {
+      document.getElementById("subjectTitle").innerText = "Введите данные (" + subject + ")";
+      showScreen(5);
+    }
+
+    function goBack(screenNumber) {
+      showScreen(screenNumber);
+    }
+
+    function showScreen(num) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById("screen" + num).classList.add("active");
+    }
+  </script>
+</body>
+</html>
